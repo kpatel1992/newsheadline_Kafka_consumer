@@ -24,23 +24,24 @@ c = Consumer({
     'group.id': 'morse-code-local-0',
     'auto.offset.reset': 'earliest',
     'enable.auto.commit': False,
-    'session.timeout.ms': 6000
+    'session.timeout.ms': 6000,
+    'fetch.min.bytes': 100000
 })
 
 # Dictionary representing the morse code chart
-MORSE_CODE_DICT = { 'A':'.-', 'A ':'.-/','B':'-...','B ':'-.../',
-                    'C':'-.-.','C ':'-.-./', 'D':'-..','D ':'-../', 'E':'.', 'E ':'./',
-                    'F':'..-.', 'F ':'..-./','G':'--.','G ':'--./', 'H':'....','H ':'..../',
-                    'I':'..','I ':'../', 'J':'.---','J ':'.---/', 'K':'-.-','K ':'-.-/',
-                    'L':'.-..','L ':'.-../', 'M':'--','M ':'--/', 'N':'-.','N ':'-./',
-                    'O':'---', 'O ':'---/', 'P':'.--.','P ':'.--./', 'Q':'--.-','Q ':'--.-/',
-                    'R':'.-.','R ':'.-./', 'S':'...','S ':'.../', 'T':'-', 'T ':'-/',
-                    'U':'..-','U ':'..-/', 'V':'...-','V ':'...-/', 'W':'.--','W ':'.--/',
-                    'X':'-..-','X ':'-..-/', 'Y':'-.--','Y ':'-.--/', 'Z':'--..','Z ':'--../',
-                    '1':'.----','1 ':'.----/', '2':'..---','2 ':'..---/', '3':'...--','3 ':'...--/',
-                    '4':'....-','4 ':'....-/', '5':'.....','5 ':'...../', '6':'-....','6 ':'-..../',
-                    '7':'--...','7 ':'--.../', '8':'---..','8 ':'---../', '9':'----.','9 ':'----./',
-                    '0':'-----','0 ':'-----/', ', ':'--..--', '.':'.-.-.-',
+MORSE_CODE_DICT = { 'A':'.-', 'B':'-...',
+                    'C':'-.-.', 'D':'-..', 'E':'.',
+                    'F':'..-.', 'G':'--.', 'H':'....',
+                    'I':'..', 'J':'.---', 'K':'-.-',
+                    'L':'.-..', 'M':'--', 'N':'-.',
+                    'O':'---', 'P':'.--.', 'Q':'--.-',
+                    'R':'.-.', 'S':'...', 'T':'-',
+                    'U':'..-', 'V':'...-', 'W':'.--',
+                    'X':'-..-', 'Y':'-.--', 'Z':'--..',
+                    '1':'.----', '2':'..---', '3':'...--',
+                    '4':'....-', '5':'.....', '6':'-....',
+                    '7':'--...', '8':'---..', '9':'----.',
+                    '0':'-----', ', ':'--..--', '.':'.-.-.-',
                     '?':'..--..', '/':'-..-.', '-':'-....-',
                     '(':'-.--.', ')':'-.--.-'}
                     
@@ -126,11 +127,11 @@ def consume_loop(consumer, topics):
                         print("Topic Message Start offset value is : {}.".format(msg.offset()))
             
                     #Read the message and decrypt the message
-                    result = decrypt(msg.value().decode('utf-8').replace('/','/ ')).lower()
+                    result = decrypt(msg.value().decode('utf-8').replace('/','  ')).lower()
                                 
                     # Search in message contain stricly australia keyword in headline then add in list
                     if re.search(r'\baustralia\b', result):
-                        
+                        # print("Matched")
                         read_count += 1  # counter to keep track of extract records
                         msg_buffer.append(result) # add record into buffer list
                         
@@ -183,4 +184,3 @@ if __name__ == '__main__':
     print("Consumer End at:{}".format(endtime_string))
     
     print("Total Time to Process 1000 australia keyword messages is: {} minutes.".format((time.mktime(endtime) - time.mktime(starttime)) / 60))
-      
