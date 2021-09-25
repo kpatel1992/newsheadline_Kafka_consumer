@@ -132,7 +132,7 @@ def consume_loop(consumer, topics):
             
                                         
                     # Search in message contain stricly australia keyword in headline then add in list
-                    if re.search(r'.- ..- ... - .-. .- .-.. .. .-/', msg.value().decode('utf-8')):
+                    if re.search(r'/.- ..- ... - .-. .- .-.. .. .-/', msg.value().decode('utf-8')) or re.search(r'.- ..- ... - .-. .- .-.. .. .-/', msg.value().decode('utf-8')):
 
                         #Read the message and decrypt the message
                         result = decrypt(msg.value().decode('utf-8').replace('/','  ')).lower()
