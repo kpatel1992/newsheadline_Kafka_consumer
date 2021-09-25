@@ -1,11 +1,11 @@
 # This is the Kafka consumer for the data is streaming through a Kafka topic, the challenge consists in tapping onto that topic, 
 # 
 # Decoding the headlines and extracting from the first 1000 records the ones that contain the word australia. 
-# Only Extracted in the headlines with australia, NOT australian or australians.
+# Search the headlines with australia in encoded form ".- ..- ... - .-. .- .-.. .. .-/", NOT australian or australians and extracted into file.
 # 
 # Save the extraction into an output text file name newsheadlines_first_1000.txt with one headline per line, decoded back to English.
 # 
-# For decode back to english I have developed the decode function name decrypt and I have not used the api mentioned in the challenge.
+# For decode back to english used the api mentioned in the challenge.
 # 
 # To consume and read/process message, I have used Confluent-kafka is a high-performance Kafka client for Python 
 # which leverages the high-performance C client librdkafka
